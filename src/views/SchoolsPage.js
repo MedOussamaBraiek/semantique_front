@@ -20,7 +20,21 @@ const SchoolsPage = () => {
     const handleChangeFilter = (e) => {
       setfilter({ ...filter, [e.target.name]: e.target.value });
     };*/
-
+    const handleChangeFilter = (e) => {
+        setfilter({ ...filter, [e.target.name]: e.target.value });
+      };
+      useEffect(()=>{
+        searchByAdress(filter?.Adress);
+      },[filter])
+      console.log(filter)
+      const searchByAdress=(adress)=>{
+        axios
+        .get(`http://localhost:8030/ws/school/getbyadress/${adress}`)
+        .then((res) => {
+            console.log(res.data);
+          setschools(res.data);
+        }); 
+      }
   const getall = () => {
     axios.get(`http://localhost:8030/ws/school/getall`).then((res) => {
       setschools(res.data);
@@ -29,10 +43,10 @@ const SchoolsPage = () => {
   useEffect(() => {
     getall();
   }, []);
-  /*const deleteFilter = () => {
+  const deleteFilter = () => {
       getall();
     };
-    const increment = () => {
+   /* const increment = () => {
       setDeleted(deleted + 1);
     };
   
@@ -118,6 +132,21 @@ const SchoolsPage = () => {
                  </Col>
           </Row>
         </Container>*/}
+        <Container fluid="xl">
+          <Col md={3}>
+              <FormGroup>
+                <Label>Adress</Label>
+                <Input
+                  size={"small"} 
+                  id="Adress"
+                  name="Adress"
+                  type="text"
+                  onChange={handleChangeFilter}
+                />
+              </FormGroup>
+            </Col>
+        </Container>
+        
       <Row>
         <Col lg="12">
           <SchoolTable schools={schools} />
@@ -129,7 +158,9 @@ const SchoolsPage = () => {
         <i className="bi bi-plus"></i>Add School
       </Button>
 
-      <Button className="btn m-2" outline color="info">
+      <Button className="btn m-2" onClick={()=>{
+        deleteFilter()
+      }} outline color="info">
         Delete Filter
       </Button>
     </div>
