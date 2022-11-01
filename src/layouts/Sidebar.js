@@ -26,7 +26,7 @@ const navigation = [
   },
   {
     title: "School",
-    href: "/school",
+    href: "/schools",
     icon: "bi bi-speedometer2",
   },
   {

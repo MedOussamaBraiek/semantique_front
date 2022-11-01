@@ -21,73 +21,61 @@ import bg2 from "../assets/images/bg/bg2.jpg";
 import bg3 from "../assets/images/bg/bg3.jpg";
 import bg4 from "../assets/images/bg/bg4.jpg";
 import axios from "axios";
+import StudentTable from "../components/dashboard/StudentTable";
 
+const StudentPage = () => {
+  const [students, setstudents] = React.useState([]);
 
-
-const CoursePage = () => {
-
-  const baseUlr = "http://localhost:8051/courses"
-
-  const [courses, setCourses] = React.useState([]);
-
-  const [name, setName] = React.useState("");
-
-  const getCourses = () => {
-    fetch(baseUlr)
-    .then((response) => response.json())
-    .then((response) => {
-        setCourses(response)
-        console.log(response)
-      }
-    )
-    .catch((err) => console.error(err));
-  }
-
-  const handleChangeName = (e) => {
-    setName(e.target.value);
+  const getAll = () => {
+    axios
+      .get(`http://localhost:8030/ws/students/all`)
+      .then((res) => {
+        console.log(res.data);
+        setstudents(res.data);
+      })
+      .catch(console.log("no connection established"));
   };
- 
+  const handleFilter = (adress) => {
+    if (adress === "") {
+      getAll();
+    } else {
+      axios
+        .get(`http://localhost:8030/ws/students/studentbyadress/${adress}`)
+        .then((res) => {
+          console.log(res.data);
+          setstudents(res.data);
+        });
+    }
+  };
 
-//   React.useEffect(() => {
-//     axios
-//       .get(`http://localhost:8051/courses/category/${categoryf}`)
-//       .then((res) => {
-//         if (res.data) {
-//           setCourses(res.data);
-//         }
-//         if(categoryf === 'All'){
-//           getCourses();
-//         }
-//       });
-//   }, [categoryf]);
-  
-
+  React.useEffect(() => {
+    getAll();
+  }, []);
 
   return (
     <div>
-
+      <Input
+        type="text"
+        placeholder="search ..."
+        onChange={(e) => handleFilter(e.target.value)}
+      ></Input>
       {/***Blog Cards***/}
       <Row>
-        {/* {BlogData.map((blg, index) => ( */}
-        {courses &&
-          courses.map((course, index) => (
-            <Col sm="6" lg="6" xl="3" key={index}>
-              {/* {courses && courses.map((course,index) => {
-              
-            })} */}
-            <Blog
-              image={bg1}
-              name={course.name}
-              description={course.description}
-              category={course.category}
-              color={"primary"}
-              id={course.id}
-            />
-          </Col>
-        ))}
+        <Col lg="12">
+          <StudentTable students={students} />
+        </Col>
       </Row>
+      {/***Blog Cards***/}
+
+      <Button className="btn" outline color="info">
+        <i className="bi bi-plus"></i>Add Student
+      </Button>
+
+      <Button className="btn m-2" outline color="info">
+        Delete Filters
+      </Button>
     </div>
   );
 };
 
-export default CoursePage;
+export default StudentPage;
