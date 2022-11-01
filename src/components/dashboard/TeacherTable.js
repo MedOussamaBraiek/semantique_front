@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Card, CardBody, CardTitle, CardSubtitle, Table } from "reactstrap";
 import user1 from "../../assets/images/users/user1.jpg";
 import user2 from "../../assets/images/users/user2.jpg";
@@ -54,6 +55,7 @@ const tableData = [
 ];
 
 const TeacherTable = ({teachers}) => {
+    const navigate = useNavigate(); 
   return (
     <div>
       <Card>
@@ -74,7 +76,7 @@ const TeacherTable = ({teachers}) => {
             </thead>
             <tbody>
               {teachers.map((tdata, index) => (
-                <tr key={index} className="border-top">
+                <tr style={{cursor:"pointer"}} onClick={ () => navigate(`/teachers/${tdata.Email.value}`)}  key={index} className="border-top">
                   <td>
                     <div className="d-flex align-items-center p-2">
                       <img
@@ -101,7 +103,7 @@ const TeacherTable = ({teachers}) => {
                     )}
                     </td> */}
                     
-                    <td>{tdata.Degree.value}</td>
+                  <td>{tdata.Degree.value}</td>
                   <td>{tdata.First_Name.value}</td>
                   <td>{tdata.Last_Name.value}</td>
                 </tr>

@@ -31,7 +31,7 @@ const Breadcrumbs = lazy(() => import("../views/ui/Breadcrumbs"));
 
 // teacher routes
 const Teachers = lazy(() => import("../views/Teahcers"));
-
+const TeachersDetail = lazy(() => import("../views/TeahcerDeatil"));
 
 /*****Routes******/
 
@@ -62,6 +62,7 @@ const ThemeRoutes = [
       { path: "/login", exact: true, element: <LoginPage /> },
       { path: "/register", exact: true, element: <RegisterPage /> },
       { path: "/teachers", exact: true, element: <Teachers /> },
+      { path: "/teachers/:id", exact: true, element: <TeachersDetail /> },
       { path: "/breadcrumbs", exact: true, element: <Breadcrumbs /> },
     ],
   },

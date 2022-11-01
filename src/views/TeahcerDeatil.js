@@ -45,7 +45,7 @@ const BlogData = [
   },
 ];
 
-const Teacher = () => {
+const TeacherDetail = () => {
   const [teachers, setTeachers] = useState([]);
   const getAllTeachers=()=>{
     axios.get(`http://localhost:8030/ws/teacher/all`).then((res) => {
@@ -115,4 +115,4 @@ const Teacher = () => {
   );
 };
 
-export default Teacher;
+export default TeacherDetail;
