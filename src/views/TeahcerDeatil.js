@@ -1,4 +1,4 @@
-import { Col, Row } from "reactstrap";
+import { CardBody, CardSubtitle, CardTitle, Col, Row } from "reactstrap";
 
 import axios from "axios";
 
@@ -9,6 +9,10 @@ import bg4 from "../assets/images/bg/bg4.jpg";
 import TeacherTable from "../components/dashboard/TeacherTable";
 import { useEffect, useState } from "react";
 import Blog from "../components/dashboard/Blog";
+import { useParams } from "react-router-dom";
+import ClassePage from "./ClassePage";
+import StudentItem from "../components/dashboard/SdutendItem";
+import CoursItem from "../components/dashboard/CoursItem";
 
 const BlogData = [
   {
@@ -46,28 +50,35 @@ const BlogData = [
 ];
 
 const TeacherDetail = () => {
-  const [teachers, setTeachers] = useState([]);
-  const getAllTeachers=()=>{
-    axios.get(`http://localhost:8030/ws/teacher/all`).then((res) => {
-      setTeachers(res.data);
+  const { id } = useParams();
+  const [teacher, setTeacher] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const getTeacherByID = () => {
+    axios.get(`http://localhost:8030/ws/teacher/name/${id}`).then((res) => {
+      setTeacher(res.data);
+    });
+  };
+
+  const getStudentsByTeacherr = () => {
+    axios.get(`http://localhost:8030/ws/teacher/email/${id}`).then((res) => {
+      
+        setStudents(res.data);
+    });
+  };
+  
+  const getCoursByTeacher = () => {
+    axios.get(`http://localhost:8030/ws/cours/teacher/${id}`).then((res) => {
+          setCourses(res.data);
     });
   }
-  const searchTeachers= (e) => {
-    axios.get(`http://localhost:8030/ws/tours/all/search/${e.target.value}`).then((res) => {
-        setTeachers(res.data);
-      });
-  }
-  useEffect(() => {
-    getAllTeachers()
-  }, []);
 
-  const handleChange=(e)=>{
-    if(e.target.value===""){
-      getAllTeachers();
-    }else {
-      searchTeachers(e);
-    }
-  }
+
+  useEffect(() => {
+    getTeacherByID();
+    getStudentsByTeacherr()
+    getCoursByTeacher();
+  }, []);
 
   return (
     <div>
@@ -78,9 +89,8 @@ const TeacherDetail = () => {
       {/***Table ***/}
       <Row>
         <div className="input-group rounded">
-         
           <input
-            onChange={handleChange}
+            //     onChange={handleChange}
             type="search"
             className="form-control rounded"
             placeholder="Search"
@@ -92,21 +102,38 @@ const TeacherDetail = () => {
           </span>
         </div>
       </Row>
+
+      <CardBody>
+      
+        {teacher[0] && (
+          <>
+            <CardTitle tag="h5"> Full Name: {teacher[0].First_Name.value}  {teacher[0].Last_Name.value} </CardTitle>
+            <CardSubtitle className="mb-2 text-muted" tag="h6">
+              Email : {teacher[0].Email.value}
+              <br />
+            </CardSubtitle>
+            <CardSubtitle className="mb-2 text-muted" tag="h6">
+              Degree : {teacher[0].Degree.value}
+            </CardSubtitle>
+          </>
+        )}
+      </CardBody>
       <Row>
-        <Col lg="12">
-          <TeacherTable teachers={teachers} />
-        </Col>
-      </Row>
-      {/***Blog Cards***/}
-      <Row>
-        {BlogData.map((blg, index) => (
+      <h1>Students</h1>
+        {students.map((item, index) => (
           <Col sm="6" lg="6" xl="3" key={index}>
-            <Blog
-              image={blg.image}
-              title={blg.title}
-              subtitle={blg.subtitle}
-              text={blg.description}
-              color={blg.btnbg}
+            <StudentItem
+             student={item}
+            />
+          </Col>
+        ))}
+      </Row>
+      <Row>
+      <h1>Course</h1>
+        {courses.map((item, index) => (
+          <Col sm="6" lg="6" xl="3" key={index}>
+            <CoursItem
+             cours={item}
             />
           </Col>
         ))}
