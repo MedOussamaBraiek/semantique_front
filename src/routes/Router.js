@@ -15,9 +15,11 @@ const DepartmentPage = lazy(() => import("../views/DepartmentPage.js"));
 
 
 const LoginPage = lazy(() => import("../views/Login.js"));
+
 const RegisterPage = lazy(() => import("../views/Register.js"));
 const UsersPage = lazy(() => import("../views/UsersPage.js"));
 const CoursesPage = lazy(() => import("../views/CoursesPage.js"));
+const SchoolsPage = lazy(() => import("../views/SchoolsPage"));
 const ClassePage = lazy(() => import("../views/ClassePage.js"));
 const About = lazy(() => import("../views/About.js"));
 const Alerts = lazy(() => import("../views/ui/Alerts"));
@@ -29,6 +31,10 @@ const Tables = lazy(() => import("../views/ui/Tables"));
 const Forms = lazy(() => import("../views/ui/Forms"));
 const Breadcrumbs = lazy(() => import("../views/ui/Breadcrumbs"));
 
+
+// teacher routes
+const Teachers = lazy(() => import("../views/Teahcers"));
+const TeachersDetail = lazy(() => import("../views/TeahcerDeatil"));
 
 /*****Routes******/
 
@@ -48,6 +54,7 @@ const ThemeRoutes = [
 
 
       { path: "/courses", exact: true, element: <CoursesPage /> },
+      { path: "/schools", exact: true, element: <SchoolsPage /> },
       { path: "/classes", exact: true, element: <ClassePage /> },
       { path: "/users", exact: true, element: <UsersPage /> },
       { path: "/about", exact: true, element: <About /> },
@@ -60,6 +67,8 @@ const ThemeRoutes = [
       { path: "/forms", exact: true, element: <Forms /> },
       { path: "/login", exact: true, element: <LoginPage /> },
       { path: "/register", exact: true, element: <RegisterPage /> },
+      { path: "/teachers", exact: true, element: <Teachers /> },
+      { path: "/teachers/:id", exact: true, element: <TeachersDetail /> },
       { path: "/breadcrumbs", exact: true, element: <Breadcrumbs /> },
     ],
   },
