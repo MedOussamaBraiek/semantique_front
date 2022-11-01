@@ -10,6 +10,8 @@ const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 const Starter = lazy(() => import("../views/Starter.js"));
 
 const StudentPage = lazy(() => import("../views/StudentPage.js"));
+const BlocsPage = lazy(() => import("../views/BlocsPage.js"));
+const DepartmentPage = lazy(() => import("../views/DepartmentPage.js"));
 
 
 const LoginPage = lazy(() => import("../views/Login.js"));
@@ -40,6 +42,8 @@ const ThemeRoutes = [
       { path: "/starter", exact: true, element: <Starter /> },
 
       { path: "/students", exact: true, element: <StudentPage /> },
+      { path: "/blocs", exact: true, element: <BlocsPage /> },
+      { path: "/departments", exact: true, element: <DepartmentPage /> },
 
 
 
