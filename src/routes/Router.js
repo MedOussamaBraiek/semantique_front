@@ -13,6 +13,7 @@ const StudentPage = lazy(() => import("../views/StudentPage.js"));
 
 
 const LoginPage = lazy(() => import("../views/Login.js"));
+
 const RegisterPage = lazy(() => import("../views/Register.js"));
 const UsersPage = lazy(() => import("../views/UsersPage.js"));
 const CoursesPage = lazy(() => import("../views/CoursesPage.js"));
@@ -28,6 +29,10 @@ const Tables = lazy(() => import("../views/ui/Tables"));
 const Forms = lazy(() => import("../views/ui/Forms"));
 const Breadcrumbs = lazy(() => import("../views/ui/Breadcrumbs"));
 
+
+// teacher routes
+const Teachers = lazy(() => import("../views/Teahcers"));
+const TeachersDetail = lazy(() => import("../views/TeahcerDeatil"));
 
 /*****Routes******/
 
@@ -58,6 +63,8 @@ const ThemeRoutes = [
       { path: "/forms", exact: true, element: <Forms /> },
       { path: "/login", exact: true, element: <LoginPage /> },
       { path: "/register", exact: true, element: <RegisterPage /> },
+      { path: "/teachers", exact: true, element: <Teachers /> },
+      { path: "/teachers/:id", exact: true, element: <TeachersDetail /> },
       { path: "/breadcrumbs", exact: true, element: <Breadcrumbs /> },
     ],
   },
